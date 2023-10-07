@@ -3,14 +3,4 @@ Explore_latent_space.ipynb
 Prepare Data and Train.ipynb
 app/templates/.ipynb_checkpoints
 model
-stylegan/output_examples
-stylegan/result
-stylegan/latent-space
-stylegan/out
-stylegan/taming
-stylegan/training_runs
-stylegan/ws_rich.npy
-stylegan/calc_metrics.py
-stylegan/model1.pt
-stylegan/wrapper.py
-stylegan/imgs_rich.npy
+stylegan-ada-pytorch
