@@ -1,0 +1,8 @@
+{"0": {"id": 0, "layers": [0, 4], "mag": [-10, 10], "effect": "sleeve"}, 
+"1": {"id": 4, "layers": [3, 9], "mag": [-10, 10], "effect": "pattern"}, 
+"2": {"id": 2, "layers": [0, 7], "mag": [-10, 10], "effect": "collar, hemline, width"}, 
+"3": {"id": 6, "layers": [10, 14], "mag": [-20, 20], "effect": "orange, blue"}, 
+"4": {"id": 0, "layers": [10, 14], "mag": [-30, 30], "effect": "Green, red"}, 
+"5": {"id": 7, "layers": [10, 14], "mag": [-40, 40], "effect": "dark, light"}, 
+"6": {"id": 9, "layers": [0, 4], "mag": [-10, 10], "effect": "hemline, collar"}, 
+"7": {"id": 8, "layers": [3, 4], "mag": [-20, 20], "effect": "waistline"}}

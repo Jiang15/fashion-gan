@@ -1,0 +1,10 @@
+{
+    0: ["layers":[0, 4], "mag":[-5, 10], "effect": "sleeve"],
+    4: ["layers": [3, 9], "mag":[-5, 10], "effect": "pattern"]
+    10: ["layers":[0, 7], "mag": [-10, 10], effect": "collar, hemline, width"],
+    6: ["layers":[10, 14], "mag": [-20, 20], effect": "orange, blue"],
+    0: ["layers":[10, 44], "mag":[-30, 0], "effect": "Green, red"],
+    7: ["layers":[10, 14], "mag":[-40, 30], "effect": "dark, light"],
+    9: ["layers":[0, 4], "mag":[-10, 10], "effect": "hemline, collar"],
+    8: ["layers":[3, 4], "mag":[-10, 20], "effect": "waistline"],
+}

@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="static/script.js"></script>
+
+
+    <title>GAN-based Fashion Design Tool </title>
+</head>
+
+<body>
+<div class = "center" id="center">
+    <!-- <h1 class = "title">GAN-based Fashion Design Tool</h1> -->
+    <!-- <div id="cincopa_6c75e3">...</div><script type="text/javascript">
+    var cpo = []; cpo["_object"] ="cincopa_6c75e3"; cpo["_fid"] = "AcLA0z-reXs_";
+    var _cpmp = _cpmp || []; _cpmp.push(cpo);
+    (function() { var cp = document.createElement("script"); cp.type = "text/javascript";
+    cp.async = true; cp.src = "https://rtcdn.cincopa.com/libasync.js";
+    var c = document.getElementsByTagName("script")[0];
+    c.parentNode.insertBefore(cp, c); })(); </script> -->
+
+    <!-- <form id = "myform" action="/generate" enctype='multipart/form-data' method = "POST"> -->
+    <div id="thumbnail">
+        <div id="drop-region">
+            <div class="drop-message">
+                Drag&Drop or click to upload
+            </div>
+            <div id="image-preview"></div>
+        </div>
+    </div>
+    <div id="style-mixing-region">
+         <div id = "result">
+            
+            <div class="container" id = "container1"></div>
+            <div class="container" id = "container2"></div>
+            <!-- <p> <label for="sleeve"> Sleeve  </label> <span id="range1">{{val1}}</span> </p>
+            <input type="range" min="-10" max="10" value="{{val1}}" step="1" class="slider" id="sleeve" name = "sleeve" onchange="showValue1(this.value)"></br>
+            
+            <p> <label for="pattern"> Pattern </label> <span id="range2">{{val2}}</span> </p>
+            <input type="range" min="-10" max="10" value="{{val2}}" step="1" class="slider" id="pattern" name = "pattern" onchange="showValue2(this.value)"></br>
+            <p> Style-mixed image </p> -->
+            <!-- <p><input type = "submit" id="submit" value = "Generate styled clothing"  /></p> -->
+            <!-- <img class = "imgshow" id = "resultImg" src = "{{img}}"> -->
+        </div>
+        <div id = "upload" class = "upload"> 
+            <!-- <p> Select fashion images 1</p> -->
+            <div class = "block">
+            <p><button id="rImg1" name = "rImg1" type="button">Rondom</button> <span id="r1">random or drag</span>
+                <!-- <input type = "file" id ="imgShape" name = "imgShape" value = "Choose shape" accept = "image/*" onchange="loadFile(event)">  -->
+            </p>
+            <div class = "drop" id="drop1" name="" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img id = "output" class = "imgshow"  src = "{{img1}}" draggable="true" ondragstart="drag(event)">
+            </div>
+            </div>
+            <div class = "block">
+            <p><button id="rImg2" name = "rImg2" class="buttom" type="button">Rondom</button> <span id="r2">random or drag</span></p>
+            <div class = "drop" id="drop2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img class = "imgshow" id = "output1" src = "{{img2}}" draggable="true" ondragstart="drag(event)" >    
+            </div> 
+            </div>
+            <div class = "block">
+            <p><button id="rImg3" name = "rImg3" type="button">Rondom</button> <span id="r3">random or drag</span></p>
+            <div class = "drop" id="drop3" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <img id = "output3" class = "imgshow"  src = "{{img3}}" draggable="true" ondragstart="drag(event)">
+            </div>
+            </div>     
+        </div>
+        
+       
+
+        <!-- <div id = "features" class = "upload">
+            <p> Select fashion images 2</p>
+            <p><button id="rImg2" name="rImg2" type="button">Rondom</button>
+                <!-- <input type = "file" id ="imgPattern" name = "imgPattern" value = "Choose pattern"  accept = "image/*" onchange="loadFile1(event)"> -->
+            <!-- </p>
+      
+        </div> --> 
+    </div>
+    <!-- </form>     -->
+     <!-- <div class="gallery"><?php
+    // (B) GET LIST OF IMAGE FILES FROM GALLERY FOLDER
+    $dir = __DIR__ . DIRECTORY_SEPARATOR . "static/image_interaction" . DIRECTORY_SEPARATOR;
+    $images = glob($dir . "*.{jpg,jpeg,gif,png,bmp,webp}", GLOB_BRACE);
+    
+    // (C) OUTPUT IMAGES 
+    foreach ($images as $i) {
+        printf("<img src='static/image_interaction/%s'/>", basename($i));
+    }
+    ?> -->
+    <div id="textbox">
+        <input id="text" name="text" size="80" value="A pink dress with flower patterns" placeholder="A pink dress with flower patterns"></input>
+        <!-- <div id="regular"> -->
+        <button id="text_gen_regular" type="button" >traditional</button>
+        <button id="text_gen" type="button" >creative</button>
+        <div id="image-region">
+            <img class = "imggenerate" id = "i1" src = "static/textimg/0.jpg" draggable="true" ondragstart="drag(event)" > 
+            <img class = "imggenerate" id = "i2" src = "static/textimg/1.jpg" draggable="true" ondragstart="drag(event)" > 
+            <img class = "imggenerate" id = "i3" src = "static/textimg/2.jpg" draggable="true" ondragstart="drag(event)" >
+            <img class = "imggenerate" id = "i4" src = "static/textimg/3.jpg" draggable="true" ondragstart="drag(event)" >  
+            <img class = "imggenerate" id = "i5" src = "static/textimg/4.jpg" draggable="true" ondragstart="drag(event)" >  
+            <img class = "imggenerate" id = "i6" src = "static/textimg/5.jpg" draggable="true" ondragstart="drag(event)" >  
+            <img class = "imggenerate" id = "i7" src = "static/textimg/6.jpg" draggable="true" ondragstart="drag(event)" >  
+            <img class = "imggenerate" id = "i8" src = "static/textimg/7.jpg" draggable="true" ondragstart="drag(event)" >  
+            <!-- <img class = "imggenerate" id = "i9" src = "static/textimg/8.jpg" draggable="true" ondragstart="drag(event)" >   -->
+        </div>
+    </div>
+    
+    <div class = "interaction" style="clear: both">
+
+        <!-- <p><button id="gImg" name = "gImg" type="button">Rondom</button></p> -->
+        <div id="canvas-container">
+
+             <select id = "xaxis" name="xaxis" onchange="valx()" autocomplete="on">
+                <option value="0" selected>Dim 0 - Sleeve </option>
+                <option value="1">Dim 1 - Pattern</option>
+                <option value="2">Dim 2 - Collar, hemline, width</option>
+                <option value="3">Dim 3 - Orange, blue</option>
+                <option value="4">Dim 4 - Green, red</option>
+                <option value="5">Dim 5 - Dark, light</option>
+                <option value="6">Dim 6 - Hemline, collar</option>
+                <option value="7">Dim 7 - Waistline</option>
+            </select>
+            <button id="clear" type="button" >Clear canvas</button>
+            <canvas id="canvas" width="800" height="800"></canvas>
+
+            <select id = "yaxis" name="yaxis" onchange="valy()" autocomplete="on">
+                <option value="0">Dim 0 - Sleeve </option>
+                <option value="1" selected>Dim 1 - Pattern</option>
+                <option value="2">Dim 2 - Collar, hemline, width</option>
+                <option value="3">Dim 3 - Orange, blue</option>
+                <option value="4">Dim 4 - Green, red</option>
+                <option value="5">Dim 5 - Dark, light</option>
+                <option value="6">Dim 6 - Hemline, collar</option>
+                <option value="7">Dim 7 - Waistline</option>
+            </select>
+        </div>
+    </div>
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@types/react@16.8.6/index.d.ts"></script>
+<script src="https://unpkg.com/@types/react-dom@16.8.6/index.d.ts"></script>
+<script src="https://unpkg.com/@types/react-dom@16.8.4/index.d.ts"></script>
+<script>
+    var // where files are dropped + file selector is opened
+        dropRegion = document.getElementById("drop-region"),
+        // where images are previewed
+        imagePreviewRegion = document.getElementById("image-preview");
+
+
+    // open file selector when clicked on the drop region
+    var fakeInput = document.createElement("input");
+    fakeInput.type = "file";
+    fakeInput.accept = "image/*";
+    fakeInput.multiple = true;
+    dropRegion.addEventListener('click', function() {
+        fakeInput.click();
+    });
+
+    fakeInput.addEventListener("change", function() {
+        var files = fakeInput.files;
+        handleFiles(files);
+        function handleFiles(files) {
+            for (var i = 0, len = files.length; i < len; i++) {
+                if (validateImage(files[i]))
+                    previewAnduploadImage(files[i]);
+            }
+        }
+
+        function validateImage(image) {
+            // check the type
+            var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (validTypes.indexOf( image.type ) === -1) {
+                alert("Invalid File Type");
+                return false;
+            }
+
+            // check the size
+            var maxSizeInBytes = 10e6; // 10MB
+            if (image.size > maxSizeInBytes) {
+                alert("File too large");
+                return false;
+            }
+
+            return true;
+
+        }
+
+        function previewAnduploadImage(image) {
+        
+            // container
+            var imgView = document.createElement("div");
+            imgView.className = "image-view";
+            imagePreviewRegion.appendChild(imgView);
+
+            // previewing image
+            var img = document.createElement("img");
+            imgView.appendChild(img);
+            img.draggable = 'true';
+            img.addEventListener("ondragstart", function drag(e){
+                e.dragTransfer.setData("text", image.filename);
+            })
+            // progress overlay
+            var overlay = document.createElement("div");
+            overlay.className = "overlay";
+            imgView.appendChild(overlay);
+
+            // read the image...
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                console.log(img.src);
+            }
+            reader.readAsDataURL(image);
+            
+            // create FormData
+            var formData = new FormData();
+            formData.append('image', image);
+        
+            // upload the image
+            var uploadLocation = '/static/upload_image';
+            
+            var ajax = new XMLHttpRequest();
+            ajax.open("POST", uploadLocation, true);
+
+            ajax.onreadystatechange = function(e) {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        
+                    } else {
+                        // error!
+                    }
+                }
+            }
+
+            ajax.upload.onprogress = function(e) {
+
+                // change progress
+                // (reduce the width of overlay)
+
+                var perc = (e.loaded / e.total * 100) || 100,
+                    width = 100 - perc;
+
+                overlay.style.width = width;
+            }
+
+            ajax.send(formData);
+
+        }
+    });
+
+    function preventDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    dropRegion.addEventListener('dragenter', preventDefault, false);
+    dropRegion.addEventListener('dragleave', preventDefault, false);
+    dropRegion.addEventListener('dragover', preventDefault, false);
+    dropRegion.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        var dt = e.dataTransfer,
+            files = dt.files;
+
+        if (files.length) {
+
+            handleFiles(files);
+
+        } else {
+
+            // check for img
+            var html = dt.getData('text/html'),
+                match = html && /\bsrc="?([^"\s]+)"?\s*/.exec(html),
+                url = match && match[1];
+            if (url) {
+                console.log("url", url);
+                uploadImageFromURL(url);
+                return;
+            }
+        }
+        function uploadImageFromURL(url) {
+            var img = new Image();
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+
+            img.onload = function() {
+                c.width = this.naturalWidth;     // update canvas size to match image
+                c.height = this.naturalHeight;
+                ctx.drawImage(this, 0, 0);       // draw in image
+                c.toBlob(function(blob) {        // get content as PNG blob
+
+                    // call our main function
+                    handleFiles( [blob] );
+
+                }, "image/png");
+            };
+            img.onerror = function() {
+                alert("Error in uploading");
+            }
+            img.crossOrigin = "";              // if from different origin
+            img.src = url;
+        }
+    function handleFiles(files) {
+            for (var i = 0, len = files.length; i < len; i++) {
+                if (validateImage(files[i]))
+                    previewAnduploadImage(files[i]);
+            }
+        }
+
+        function validateImage(image) {
+            // check the type
+            var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (validTypes.indexOf( image.type ) === -1) {
+                alert("Invalid File Type");
+                return false;
+            }
+
+            // check the size
+            var maxSizeInBytes = 10e6; // 10MB
+            if (image.size > maxSizeInBytes) {
+                alert("File too large");
+                return false;
+            }
+
+            return true;
+
+        }
+
+        function previewAnduploadImage(image) {
+        
+            // container
+            var imgView = document.createElement("div");
+            imgView.className = "image-view";
+            imagePreviewRegion.appendChild(imgView);
+
+            // previewing image
+            var img = document.createElement("img");
+            imgView.appendChild(img);
+            img.draggable = 'true';
+            img.addEventListener("ondragstart", function drag(e){
+                e.dragTransfer.setData("text", image.filename);
+            })
+            // progress overlay
+            var overlay = document.createElement("div");
+            overlay.className = "overlay";
+            imgView.appendChild(overlay);
+
+            // read the image...
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                console.log(img.src);
+            }
+            reader.readAsDataURL(image);
+            
+            // create FormData
+            var formData = new FormData();
+            formData.append('image', image);
+        
+            // upload the image
+            var uploadLocation = '/static/upload_image';
+            
+            var ajax = new XMLHttpRequest();
+            ajax.open("POST", uploadLocation, true);
+
+            ajax.onreadystatechange = function(e) {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        
+                    } else {
+                        // error!
+                    }
+                }
+            }
+
+            ajax.upload.onprogress = function(e) {
+
+                // change progress
+                // (reduce the width of overlay)
+
+                var perc = (e.loaded / e.total * 100) || 100,
+                    width = 100 - perc;
+
+                overlay.style.width = width;
+            }
+
+            ajax.send(formData);
+
+        }
+    }
+
+
+
+
+
+    
+    </script>
+
+
+
+
+    <script>
+        window.addEventListener("DOMContentLoaded", function(){
+    // (A) GET ALL IMAGES
+    var all = document.querySelectorAll(".gallery img");
+    
+    // (B) CLICK ON IMAGE TO TOGGLE FULLSCREEN
+    if (all.length>0) { for (let img of all) {
+        img.addEventListener("click", function(){
+        // EXIT FULLSCREEN
+        if (document.webkitFullscreenElement || document.fullscreenElement) {
+            if (document.exitFullscreen) { document.exitFullscreen(); }
+            else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+        }
+
+        // ENGAGE FULLSCREEN
+        else {
+            if (this.requestFullscreen) { this.requestFullscreen(); }
+            else if (this.webkitRequestFullscreen) { this.webkitRequestFullscreen(); }
+        }
+        });
+    }}
+    });
+</script>
+<script>
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.src);
+}
+
+
+var block = document.getElementById("drop1")
+
+
+    function preventDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    block.addEventListener('dragenter', preventDefault, false);
+    block.addEventListener('dragleave', preventDefault, false);
+    block.addEventListener('dragover', preventDefault, false);
+    block.addEventListener('drop', drop1, false);
+
+var block1 = document.getElementById("drop2");
+ 
+
+    function preventDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    block1.addEventListener('dragenter', preventDefault, false);
+    block1.addEventListener('dragleave', preventDefault, false);
+    block1.addEventListener('dragover', preventDefault, false);
+    block1.addEventListener('drop', drop2, false);
+    var block2 = document.getElementById("drop3");
+ 
+
+    function preventDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    block2.addEventListener('dragenter', preventDefault, false);
+    block2.addEventListener('dragleave', preventDefault, false);
+    block2.addEventListener('dragover', preventDefault, false);
+    block2.addEventListener('drop', drop3, false);
+function drop1(e) {
+ 
+
+    var imgView = document.getElementById("drop1");
+//   ev.target.appendChild(document.getElementById(data));
+
+    var dt = e.dataTransfer,
+            files = dt.files;
+            console.log("file" + files)
+
+        if (files.length) {
+
+            handleFiles(files);
+
+        } else {
+
+            // check for img
+            var html = dt.getData('text/html'),
+                match = html && /\bsrc="?([^"\s]+)"?\s*/.exec(html),
+                url = match && match[1];
+            if (url) {
+                uploadImageFromURL(url);
+                return;
+            }
+        }
+        
+        function uploadImageFromURL(url) {
+            var img = new Image;
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+
+            img.onload = function() {
+                c.width = this.naturalWidth;     // update canvas size to match image
+                c.height = this.naturalHeight;
+                ctx.drawImage(this, 0, 0);       // draw in image
+                c.toBlob(function(blob) {        // get content as PNG blob
+
+                    // call our main function
+                    handleFiles( [blob] );
+
+                }, "image/png");
+            };
+            img.onerror = function() {
+                alert("Error in uploading");
+            }
+            img.crossOrigin = "";              // if from different origin
+            img.src = url;
+        }
+
+
+
+        // progress overlay
+ function handleFiles(files) {
+        for (var i = 0, len = files.length; i < len; i++) {
+            if (validateImage(files[i]))
+                previewAnduploadImage(files[i]);
+        }
+    }
+
+    function validateImage(image) {
+        // check the type
+        var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (validTypes.indexOf( image.type ) === -1) {
+            alert("Invalid File Type");
+            return false;
+        }
+
+        // check the size
+        var maxSizeInBytes = 10e6; // 10MB
+        if (image.size > maxSizeInBytes) {
+            alert("File too large");
+            return false;
+        }
+
+        return true;
+
+    }
+
+    function previewAnduploadImage(image) {
+        // previewing image
+        // var img = document.createElement("img");
+        // block.appendChild(img);
+        var img = document.getElementById("output");
+        // read the image...
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            
+        }
+        document.getElementById("r1").innerHTML = "waiting...";
+        reader.readAsDataURL(image);
+        
+        // img1.src = "static/upload_image/" + image.filename
+        // create FormData
+        var formData = new FormData();
+        formData.append('image', image);
+        // upload the image
+        var uploadLocation = '/upload1';
+        
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", uploadLocation, true);
+
+        ajax.onreadystatechange = function(e) {
+            if (ajax.readyState === 4) {
+                if (ajax.status === 200) {
+                    console.log(this.responseText);
+                    var result = JSON.parse(this.responseText);
+                    document.getElementById("r1").innerHTML = "success!";
+                    document.getElementById("output").src = result.l;
+                    star_img.src = result.interaction;
+                } else {
+                    // error!
+                }
+            }
+        }
+
+
+
+        ajax.send(formData);
+}
+}
+
+function drop2(e) {
+ 
+
+    var imgView = document.getElementById("drop2");
+//   ev.target.appendChild(document.getElementById(data));
+
+    var dt = e.dataTransfer,
+            files = dt.files;
+            console.log("file" + files)
+
+        if (files.length) {
+
+            handleFiles(files);
+
+        } else {
+
+            // check for img
+            var html = dt.getData('text/html'),
+                match = html && /\bsrc="?([^"\s]+)"?\s*/.exec(html),
+                url = match && match[1];
+            if (url) {
+                uploadImageFromURL(url);
+                return;
+            }
+        }
+        
+        function uploadImageFromURL(url) {
+            var img = new Image;
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+
+            img.onload = function() {
+                c.width = this.naturalWidth;     // update canvas size to match image
+                c.height = this.naturalHeight;
+                ctx.drawImage(this, 0, 0);       // draw in image
+                c.toBlob(function(blob) {        // get content as PNG blob
+
+                    // call our main function
+                    handleFiles( [blob] );
+
+                }, "image/png");
+            };
+            img.onerror = function() {
+                alert("Error in uploading");
+            }
+            img.crossOrigin = "";              // if from different origin
+            img.src = url;
+        }
+
+
+
+        // progress overlay
+ function handleFiles(files) {
+        for (var i = 0, len = files.length; i < len; i++) {
+            if (validateImage(files[i]))
+                previewAnduploadImage(files[i]);
+        }
+    }
+
+    function validateImage(image) {
+        // check the type
+        var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (validTypes.indexOf( image.type ) === -1) {
+            alert("Invalid File Type");
+            return false;
+        }
+
+        // check the size
+        var maxSizeInBytes = 10e6; // 10MB
+        if (image.size > maxSizeInBytes) {
+            alert("File too large");
+            return false;
+        }
+
+        return true;
+
+    }
+
+    function previewAnduploadImage(image) {
+        // previewing image
+        // var img = document.createElement("img");
+        // block.appendChild(img);
+        var img = document.getElementById("output1");
+        // read the image...
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        }
+        document.getElementById("r2").innerHTML = "waiting...";
+        reader.readAsDataURL(image);
+        
+        // img1.src = "static/upload_image/" + image.filename
+        // create FormData
+        var formData = new FormData();
+        formData.append('image', image);
+
+ 
+        // upload the image
+        var uploadLocation = '/upload2';
+        
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", uploadLocation, true);
+
+        ajax.onreadystatechange = function(e) {
+            if (ajax.readyState === 4) {
+                if (ajax.status === 200) {
+                    console.log(this.responseText);
+                    var result = JSON.parse(this.responseText);
+                    document.getElementById("output1").src = result.l;
+                    document.getElementById("r2").innerHTML = "success!";
+                    star_img.src = result.interaction;
+                } else {
+                    // error!
+                }
+            }
+        }
+
+
+
+        ajax.send(formData);
+}
+}
+function drop3(e) {
+ 
+
+    var imgView = document.getElementById("drop3");
+//   ev.target.appendChild(document.getElementById(data));
+
+    var dt = e.dataTransfer,
+            files = dt.files;
+            console.log("file" + files)
+
+        if (files.length) {
+
+            handleFiles(files);
+
+        } else {
+
+            // check for img
+            var html = dt.getData('text/html'),
+                match = html && /\bsrc="?([^"\s]+)"?\s*/.exec(html),
+                url = match && match[1];
+            if (url) {
+                uploadImageFromURL(url);
+                return;
+            }
+        }
+        
+        function uploadImageFromURL(url) {
+            var img = new Image;
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+
+            img.onload = function() {
+                c.width = this.naturalWidth;     // update canvas size to match image
+                c.height = this.naturalHeight;
+                ctx.drawImage(this, 0, 0);       // draw in image
+                c.toBlob(function(blob) {        // get content as PNG blob
+
+                    // call our main function
+                    handleFiles( [blob] );
+
+                }, "image/png");
+            };
+            img.onerror = function() {
+                alert("Error in uploading");
+            }
+            img.crossOrigin = "";              // if from different origin
+            img.src = url;
+        }
+
+
+
+        // progress overlay
+ function handleFiles(files) {
+        for (var i = 0, len = files.length; i < len; i++) {
+            if (validateImage(files[i]))
+                previewAnduploadImage(files[i]);
+        }
+    }
+
+    function validateImage(image) {
+        // check the type
+        var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (validTypes.indexOf( image.type ) === -1) {
+            alert("Invalid File Type");
+            return false;
+        }
+
+        // check the size
+        var maxSizeInBytes = 10e6; // 10MB
+        if (image.size > maxSizeInBytes) {
+            alert("File too large");
+            return false;
+        }
+
+        return true;
+
+    }
+
+    function previewAnduploadImage(image) {
+        // previewing image
+        // var img = document.createElement("img");
+        // block.appendChild(img);
+        var img = document.getElementById("output3");
+        // read the image...
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            
+        }
+        document.getElementById("r3").innerHTML = "waiting...";
+        reader.readAsDataURL(image);
+        
+        // img1.src = "static/upload_image/" + image.filename
+        // create FormData
+        var formData = new FormData();
+        formData.append('image', image);
+
+        // upload the image
+        var uploadLocation = '/upload3';
+        
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", uploadLocation, true);
+
+        ajax.onreadystatechange = function(e) {
+            if (ajax.readyState === 4) {
+                if (ajax.status === 200) {
+                    console.log(this.responseText);
+                    var result = JSON.parse(this.responseText);
+                    document.getElementById("r3").innerHTML = "success!";
+                    document.getElementById("output3").src = result.l;
+                    star_img.src = result.interaction;
+                } else {
+                    // error!
+                }
+            }
+        }
+
+
+
+        ajax.send(formData);
+}
+}
+
+
+
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+};
+
+var loadFile1 = function(event) {
+	var image = document.getElementById('output1');
+    image.src = URL.createObjectURL(event.target.files[0]);
+};
+
+function showValue1(newValue)
+{
+	document.getElementById("range1").innerHTML=newValue;
+};
+
+function showValue2(newValue)
+{
+	document.getElementById("range2").innerHTML=newValue;
+};
+
+let selectedValueY = $("#yaxis option:selected").val();
+let selectedValueX = $("#xaxis option:selected").val();
+function valx() {
+    selectedValueX = document.getElementById("xaxis").value;
+}
+function valy() {
+    selectedValueY = document.getElementById("yaxis").value;
+}
+
+var canvas, context;
+var star_img = new Image(160,160);
+var isDraggable = false;
+var currentX = 0;
+var currentY = 0;
+var lastX = 0;
+var lastY = 0;
+var r = 10; //range of the magnititude
+var shapes = [];
+var images = [];
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+window.onload = function() {
+  star_img = new Image(180, 180);
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+  currentX = canvas.width/2;
+  currentY = canvas.height/2;
+  lastX = canvas.width/2;
+  lastY = canvas.height/2;
+  console.log(star_img.width, star_img.height);
+  star_img.src="static/image_interaction/query"+ currentX + "_" + currentY + ".jpg";
+  star_img.width =180;
+  star_img.height =180;
+  
+  _MouseEvents();
+star_img.onload = function(){
+      _Go(); 
+} 
+
+};
+//   function drawBoard(){
+//     context.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+//     for (var y = 0.5; y < canvas.height; y += 20) {
+//         // ctx.beginPath();
+//         context.moveTo(0, y);
+//         context.lineTo(canvas.width, y);
+//     }
+//     for (var x = 0.5; x < canvas.width; x += 20) {
+//         context.moveTo(x, 0);
+//         context.lineTo(x, canvas.height);
+//     }
+//       context.stroke();      
+//   }
+
+function _Go() {
+  
+    setInterval(function() {
+    _ResetCanvas();
+  _DrawImage();
+    }, 1000/10);
+}
+
+function _ResetCanvas() {
+  context.fillStyle = '#fff';
+  context.fillRect(0,0, canvas.width, canvas.height);
+     context.beginPath();
+    context.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+    for (var y = 0.5; y < canvas.height; y += 25) {
+        // ctx.beginPath();
+        context.moveTo(0, y);
+        context.lineTo(canvas.width, y);
+    }
+    for (var x = 0.5; x < canvas.width; x += 25) {
+        context.moveTo(x, 0);
+        context.lineTo(x, canvas.height);
+    }
+
+    context.stroke();      
+  }
+
+
+
+
+function _MouseEvents() {
+  canvas.onmousedown = function(e) {
+
+    var mouseX = e.pageX - document.getElementById("canvas-container").offsetLeft;
+    var mouseY = e.pageY - this.offsetTop;
+   
+
+    if (mouseX >= (currentX - star_img.width/2) &&
+        mouseX <= (currentX + star_img.width/2) &&
+        mouseY >= (currentY - star_img.height/2) &&
+        mouseY <= (currentY + star_img.height/2)) {
+      isDraggable = true;
+      //currentX = mouseX;
+      //currentY = mouseY;
+    }
+  };
+    canvas.onclick = function(event){
+            var clickX = event.pageX - document.getElementById("canvas-container").offsetLeft;
+            var clickY = event.pageY - this.offsetTop- document.getElementById("canvas-container").offsetTop;
+
+            var x = Math.round(clickX - star_img.width/2);
+            var y = Math.round(clickY - star_img.height/2);
+            var flag = true;
+            var broke = false;
+            for(var i=0;i<shapes.length;i++){
+                if(Math.abs(clickX - shapes[i].x_coord)<20 && Math.abs(clickY - shapes[i].y_coord)<20){
+
+                    for(var j=0;j<images.length;j++){
+                        if(Math.abs(clickX-images[j].x)<20 && Math.abs(clickY -images[j].y)<20){
+                            images.splice(j, 1);
+                           
+                   
+                            flag = false;
+                            broke = true;
+                            break;
+                        }
+                    }
+                    if(broke){
+                        break;
+                    }
+                    if(flag){
+                        var im = {
+                            "x":shapes[i].x_coord,
+                            "y":shapes[i].y_coord
+                            }
+                        images.push(im);
+           
+ 
+                        break;
+                    }
+                        
+                }
+                
+            }
+        };
+            
+
+  canvas.onmousemove = function(e) {
+
+    if (isDraggable) {
+      currentX = e.pageX - document.getElementById("canvas-container").offsetLeft;
+      currentY = e.pageY - this.offsetTop - document.getElementById("canvas-container").offsetTop;
+        // _ResetCanvas();
+        // _DrawImage();
+    }
+            // for(var i=0;i<shapes.length;i++){
+            //     if(Math.abs(currentX - shapes[i].x_coord)<10 && Math.abs(currentY - shapes[i].y_coord)<10){
+            //         var new_img = new Image();
+            //         var x = shapes[i].x_coord;
+            //         var y = shapes[i].y_coord;
+            //         new_img.src="static/image_interaction/query"+ x + "_" + y + ".jpg"
+            //         context.drawImage(new_img, x-(new_img.width/2), y-(new_img.height/2));
+            //     }
+            // }
+
+  };
+  canvas.onmouseup = function(e) {
+    isDraggable = false;
+    if ( currentY!=lastY || currentX!=lastX){
+     $.ajax({
+            url: '/changeImage',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({"currentX":currentX, "currentY":currentY, "x": (currentX - canvas.width/2)*(2*r/canvas.width), "y": (currentY - canvas.height/2)*(2*r/canvas.height), 
+                                "xaxis": selectedValueX, "yaxis": selectedValueY}),   // converts js value to JSON string
+            })
+            .done(function(result){ 
+                star_img.src = result.l;     // do whatever with it. In this case see it in console
+            })
+        var circle = {
+        x_coord: lastX, 
+        y_coord: lastY, 
+        color: "green", 
+        visible: true
+        };
+
+        // Pushing circle object into the array of circles
+        shapes.push(circle);
+  
+        console.log(currentX,currentY,lastX,lastY);
+        lastX = currentX;
+        lastY = currentY;
+    }
+    
+  };
+  
+  canvas.onmouseout = function(e) {
+    isDraggable = false;
+  };
+}
+
+function _DrawImage() {
+
+    context.drawImage(star_img, currentX-(star_img.width/2), currentY-(star_img.height/2), 180, 180);
+
+  
+  var i;
+  for (i=0;i<shapes.length;i++) {
+    context.beginPath();
+    context.fillStyle="green";
+    context.arc(shapes[i].x_coord, shapes[i].y_coord, 7, 0, 2 * Math.PI);
+    context.fill();
+    }
+
+    var cnt = images.length;
+    for(var j=0;j<images.length;j++){
+        var img = new Image(120, 120);
+        
+        var x = images[j].x;
+        var y = images[j].y;
+        img.src="static/image_interaction/query"+ x + "_" + y + ".jpg";
+ 
+        context.drawImage(img, x-60, y-60, 120, 120);
+
+        
+    }
+
+}
+$(function() {
+        $('#clear').on('click', function(e) {
+        
+        e.preventDefault();
+        $.ajax({
+            url: '/clearimg',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({"currentX":currentX, "currentY":currentY}),   // converts js value to JSON string
+            })
+            .done(function(data){ 
+        
+                images = [];
+                shapes = [];
+                star_img = new Image(180, 180);
+                currentX = canvas.width/2;
+                currentY = canvas.height/2;
+                lastX = canvas.width/2;
+                lastY = canvas.height/2;
+                star_img.src = data.l;
+
+                star_img.onload = function(){
+                    _Go(); 
+                } 
+            })
+
+        return false;
+        });
+    });
+</script>
+
+<script>
+ //import React,{ useState, useRef,Fragment } from 'react'
+    const { Component, useRef, Fragment, useState } = React;
+
+let _tags = [
+    {
+        name:"img 1",
+        color: "red"
+    },
+    {
+        name:"img 2",
+        color: "purple"
+    },
+    {
+        name:"img 3",
+        color: "orange"
+    }
+];
+const getPercentage = (containerWidth, distanceMoved) => {
+    return Math.floor((distanceMoved / containerWidth) * 100);
+};
+const limitNumberWithinRange = (value, min, max) => {
+    return Math.min(Math.max(value, min), max);
+};
+const nearestN = (N, number) => Math.ceil(number / N) * N;
+const TagSection = ({ name, color, width, onSliderSelect }) => {
+    return (React.createElement("div", { className: "tag", style: Object.assign(Object.assign({}, styles.tag), { background: color, width: width + "%" }) },
+        React.createElement("span", { style: styles.tagText }, name),
+        React.createElement("span", { style: Object.assign(Object.assign({}, styles.tagText), { fontSize: 8 }) }, width + "%"),
+        React.createElement("div", { style: styles.sliderButton, onPointerDown: onSliderSelect, className: "slider-button" },
+            React.createElement("img", { src: "https://assets.codepen.io/576444/slider-arrows.svg", height: "30%" }))));
+};
+let prevPercentage = 50;
+let newPercentage = 50;
+let width = [33, 33, 33];
+let width1 = [33, 33, 33];
+const TagSlider = () => {
+    const [widths, setWidths] = useState(new Array(_tags.length).fill(Math.floor(100 / _tags.length)));
+    
+    const [tags, setTags] = useState(_tags);
+    const TagSliderRef = useRef(null);
+    return (React.createElement("p", null,"Coarse  ", 
+        React.createElement("button", { onClick: () => {
+                setTags(_tags);
+                setWidths(new Array(_tags.length).fill(100 / _tags.length));
+            }, style: { marginTop: 10 } }, "Refresh"),
+        React.createElement("div", { ref: TagSliderRef, style: {
+                width: "90%",
+                display: "flex",
+                backgroundColor: 'transparent'
+                } 
+            }, tags.map((tag, index) => (React.createElement(TagSection, { width: widths[index], key: index, noSliderButton: index === tags.length - 1, name: tag.name, onSliderSelect: (e) => {
+                e.preventDefault();
+                document.body.style.cursor = "ew-resize";
+                const startDragX = e.pageX;
+                const sliderWidth = TagSliderRef.current.offsetWidth;
+                const resize = (e) => {
+                    e.preventDefault();
+                    const endDragX = e.touches ? e.touches[0].pageX : e.pageX;
+                    const distanceMoved = endDragX - startDragX;
+                    const maxPercent = widths[index] + widths[index + 1];
+                    const percentageMoved = nearestN(1, getPercentage(sliderWidth, distanceMoved));
+                    // const percentageMoved = getPercentage(sliderWidth, distanceMoved);
+                    const _widths = widths.slice();
+                    prevPercentage = _widths[index];
+                    newPercentage = prevPercentage + percentageMoved;
+                    
+                    const currentSectionWidth = limitNumberWithinRange(newPercentage, 0, maxPercent);
+                    _widths[index] = currentSectionWidth;
+                    const nextSectionIndex = index + 1;
+                    const nextSectionNewPercentage = _widths[nextSectionIndex] - percentageMoved;
+                    const nextSectionWidth = limitNumberWithinRange(nextSectionNewPercentage, 0, maxPercent);
+                    _widths[nextSectionIndex] = nextSectionWidth;
+                    if (tags.length > 2) {
+                        if (_widths[index] === 0) {
+                            _widths[nextSectionIndex] = maxPercent;
+                            // _widths.splice(index, 1);
+                            // setTags(tags.filter((t, i) => i !== index));
+                             //removeEventListener();
+                        }
+                        if (_widths[nextSectionIndex] === 0) {
+                            _widths[index] = maxPercent;
+                            // _widths.splice(nextSectionIndex, 1);
+                            // setTags(tags.filter((t, i) => i !== nextSectionIndex));
+                            // removeEventListener();
+                        }
+                    }
+                    setWidths(_widths);
+        
+                    width = _widths;
+                };
+                const handleEventUp = (e) => {
+                    e.preventDefault();
+                    document.body.style.cursor = "initial";
+                    removeEventListener();
+                        if (prevPercentage!=newPercentage){
+                        $.ajax({
+                            url: '/stylemix',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: JSON.stringify({0:widths, 1: width1}),   // converts js value to JSON string
+                        }).done(function(result){ 
+                            star_img.src = result.l;
+                            // do whatever with it. In this case see it in console
+                            star_img.width =180;
+                            star_img.height =180;
+                            _ResetCanvas();
+                            star_img.onload = function(){
+                                _Go(); 
+                            } 
+                        })
+                    }
+                };
+                
+                // window.addEventListener("touchend", handleEventUp);
+                window.addEventListener("pointerup", handleEventUp);
+                window.addEventListener("pointermove", resize);
+                window.addEventListener("touchmove", resize);
+                const removeEventListener = () => {
+                    window.removeEventListener("pointermove", resize);
+                    window.removeEventListener("touchmove", resize);
+                    window.removeEventListener("pointerup", handleEventUp);
+                };
+            }, // end of onsliderselect 
+            color: tag.color }))))));
+};
+const styles = {
+    tag: {
+        padding: 0,
+        textAlign: "center",
+        position: "relative",
+        borderRightWidth: ".1em",
+        borderRightStyle: "solid",
+        borderRightColor: "white",
+        boxSizing: "border-box",
+        borderLeftWidth: ".1em",
+        borderLeftStyle: "solid",
+        borderLeftColor: "white"
+    },
+    tagText: {
+        color: "white",
+        fontWeight: 700,
+        userSelect: "none",
+        display: "block",
+        overflow: "hidden",
+        fontFamily: "serif"
+    },
+    sliderButton: {
+        textAlign:"center",
+        width: "2em",
+        height: "2em",
+        backgroundColor: "white",
+        position: "absolute",
+        borderRadius: "2em",
+        right: "calc(-1.1em)",
+        top: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        bottom: 0,
+        margin: "auto",
+        zIndex: 10,
+        cursor: "ew-resize",
+        userSelect: "none"
+    }
+};
+
+
+ReactDOM.render(React.createElement(TagSlider, null), document.querySelector("#container1"));
+
+
+const TagSlider1 = () => {
+    const [widths, setWidths] = useState(new Array(_tags.length).fill(Math.floor(100 / _tags.length)));
+    const [tags, setTags] = useState(_tags);
+    const TagSliderRef = useRef(null);
+    return (React.createElement("p", null,"Fine  ",
+        React.createElement("button", { onClick: () => {
+                setTags(_tags);
+                setWidths(new Array(_tags.length).fill(Math.floor(100 / _tags.length)));
+            }, style: { marginTop: 10 } }, "Refresh"),
+        React.createElement("div", { ref: TagSliderRef, style: {
+                width: "90%",
+                display: "flex",
+                backgroundColor: 'transparent'
+            } }, tags.map((tag, index) => (React.createElement(TagSection, { width: widths[index], key: index, noSliderButton: index === tags.length - 1, name: tag.name, onSliderSelect: (e) => {
+                e.preventDefault();
+                document.body.style.cursor = "ew-resize";
+                const startDragX = e.pageX;
+                const sliderWidth = TagSliderRef.current.offsetWidth;
+                const resize = (e) => {
+                    e.preventDefault();
+                    const endDragX = e.touches ? e.touches[0].pageX : e.pageX;
+                    const distanceMoved = endDragX - startDragX;
+                    const maxPercent = widths[index] + widths[index + 1];
+                    const percentageMoved = nearestN(1, getPercentage(sliderWidth, distanceMoved));
+                    // const percentageMoved = getPercentage(sliderWidth, distanceMoved);
+                    const _widths = widths.slice();
+                    prevPercentage = _widths[index];
+                    newPercentage = prevPercentage + percentageMoved;
+                    
+                    const currentSectionWidth = limitNumberWithinRange(newPercentage, 0, maxPercent);
+                    _widths[index] = currentSectionWidth;
+                    const nextSectionIndex = index + 1;
+                    const nextSectionNewPercentage = _widths[nextSectionIndex] - percentageMoved;
+                    const nextSectionWidth = limitNumberWithinRange(nextSectionNewPercentage, 0, maxPercent);
+                    _widths[nextSectionIndex] = nextSectionWidth;
+                    if (tags.length > 2) {
+                        if (_widths[index] === 0) {
+                            _widths[nextSectionIndex] = maxPercent;
+                            // _widths.splice(index, 1);
+                            // setTags(tags.filter((t, i) => i !== index));
+                            // removeEventListener();
+                        }
+                        if (_widths[nextSectionIndex] === 0) {
+                            _widths[index] = maxPercent;
+                            // _widths.splice(nextSectionIndex, 1);
+                            // setTags(tags.filter((t, i) => i !== nextSectionIndex));
+                            // removeEventListener();
+                        }
+                    }
+                    setWidths(_widths);
+                    width1 = _widths;
+                
+                };                
+                const handleEventUp = (e) => {
+                    e.preventDefault();
+                    document.body.style.cursor = "initial";
+                    removeEventListener();
+                    console.log(width1);
+                        if (prevPercentage!=newPercentage){
+                            $.ajax({
+                                url: '/stylemix',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: JSON.stringify({0:widths, 1: width1}),   // converts js value to JSON string
+                                })
+                                .done(function(result){ 
+                    
+                                    star_img.src = result.l;
+                                    // do whatever with it. In this case see it in console
+                                    star_img.width =160;
+                                    star_img.height =160;
+                                    _ResetCanvas();
+                                    star_img.onload = function(){
+                                        _Go(); 
+                                    }
+                                })
+
+                        }
+                };
+                
+                window.addEventListener("pointerup", handleEventUp);
+                window.addEventListener("pointermove", resize);
+                window.addEventListener("touchmove", resize);
+                const removeEventListener = () => {
+                    window.removeEventListener("pointermove", resize);
+                    window.removeEventListener("touchmove", resize);
+                    window.removeEventListener("pointerup", handleEventUp);
+                };
+
+            }, color: tag.color }))))));
+};
+ReactDOM.render(React.createElement(TagSlider1, null), document.querySelector("#container2"));
+
+
+</script>
+
+<script type=text/javascript>
+
+        $(function() {
+          $('#rImg1').on('click', function(e) {
+
+            e.preventDefault()
+            $.getJSON('/getImg1',
+                function(data) {
+              $("#output").attr("src", data.l);
+                star_img.src = data.interaction;
+            });
+            return false;
+          });
+        });
+
+        $(function() {
+          $('#rImg2').on('click', function(e) {
+
+            e.preventDefault()
+            $.getJSON('/getImg2',
+                function(data) {
+    
+              $("#output1").attr("src", data.l);
+              star_img.src = data.interaction;
+            });
+            return false;
+          });
+        });
+     
+        $(function() {
+          $('#rImg3').on('click', function(e) {
+
+            e.preventDefault()
+            $.getJSON('/getImg3',
+                function(data) {
+    
+              $("#output3").attr("src", data.l);
+              star_img.src = data.interaction;
+            });
+            return false;
+          });
+        });
+        
+        $(function() {
+          $('#gImg').on('click', function(e) {
+
+            e.preventDefault()
+            $.getJSON('/getImage',
+                function(data) {
+                    star_img.src = data.l;
+            });
+            return false;
+          });
+        });
+        console.log(document.getElementById("text").value);
+        $(function() {
+          $('#text_gen').on('click', function(e) {
+            e.preventDefault()
+            var texts = $('#text').val();
+            $('#text').attr("placeholder", "waiting...");
+            $.ajax({
+                url: '/text2img',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(texts),   // converts js value to JSON string
+                })
+                .done(function(data){ 
+                    $('#text').attr("placeholder", text);
+                    $("#i5").attr("src", data[0]);
+                    $("#i6").attr("src", data[1]); 
+                    $("#i7").attr("src", data[2]); 
+                    $("#i8").attr("src", data[3]); 
+                    // $("#i9").attr("src", data[8]); 
+                })
+
+            return false;
+          });
+        });
+
+
+ $(function() {
+          $('#text_gen_regular').on('click', function(e) {
+            e.preventDefault()
+            var texts = $('#text').val();
+            $('#text').attr("placeholder", "waiting...");
+            $.ajax({
+                url: '/text2img_re',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(texts),   // converts js value to JSON string
+                })
+                .done(function(data){ 
+                    $("#i1").attr("src", data[0]);
+                    $("#i2").attr("src", data[1]);
+                    $("#i3").attr("src", data[2]); 
+                    $("#i4").attr("src", data[3]); 
+                    $('#text').attr("placeholder", text);
+                    $("#i5").attr("src", data[4]);
+                    $("#i6").attr("src", data[5]); 
+                    $("#i7").attr("src", data[6]); 
+                    $("#i8").attr("src", data[7]);
+                })
+
+            return false;
+          });
+        });
+</script>
+</div>
+</body>
+</html>
