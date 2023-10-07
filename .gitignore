@@ -2,5 +2,5 @@ app.ipynb
 Explore_latent_space.ipynb
 Prepare Data and Train.ipynb
 app/templates/.ipynb_checkpoints
-model
+model/*
 stylegan-ada-pytorch
