@@ -17,12 +17,11 @@ design space by lowering the barrier of entry to using deep generative models in
 
 ## Dataset
 We use [Zalando dataset](https://github.com/zalandoresearch/feidegger)
-which can also be downloaded from [Google drive](https://drive.google.com/file/d/1vmBHGiqoICdaLaUqFUy6YiXMBLPuhTCy/view?usp=drive_link).
+which can also be downloaded from [Zalando images](https://drive.google.com/file/d/1vmBHGiqoICdaLaUqFUy6YiXMBLPuhTCy/view?usp=drive_link) and [Zalando Text Image Pairs](https://drive.google.com/drive/folders/1-i9y8dhKjRX36152dBTEPmL_7ers2mr4?usp=drive_link).
 The dataset itself consists of 8732 high-resolution images, 
 each depicting a dress from the available on the Zalando shop against a white-background.
-
-## Train StyleGAN Model
-Train fashion gan from scratch
+## Models
+#### Train StyleGAN Model from scratch
 ```commandline
 !python train.py --outdir "training_runs" --snap 20 --metrics "none" --data "data/square_256_imgs.zip"
 ```
@@ -31,10 +30,11 @@ If the resume the model from a checkpoint, we can --resume
 !python train.py --outdir "training_runs" --snap 20 --metrics "none" --data "data/square_256_imgs.zip" --resume "training_runs/00015-square_256_imgs-auto1-resumecustom/network-snapshot-000400.pkl"
 ```
 
-## Finetune DALL-E Model
+#### Finetune DALL-E Model
+```commandline
+!python "DALLE-pytorch/train_dalle.py" --vae_path "DALLE-pytorch/wandb/vae-final.pt" --image_text_folder "data/text_images"
+```
 
-
-## Models
 Download the models in the following links and save them in your Google Drive.
 
 |         Model          |                                                      Download                                                       |
