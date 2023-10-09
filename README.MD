@@ -6,7 +6,14 @@ Author: Wei Jiang, Richard Lee Davis, Kevin Gonyop Kim, Pierre Dillenbourg
 
 https://proceedings.mlr.press/v176/jiang22a.html  
 
-Abstract: We have developed a new tool that makes it possible for people with zero programming experience to intentionally and meaningfully explore the latent space of a GAN. We combine a number of methods from the literature into a single system that includes multiple functionalities: uploading and locating images in the latent space, image generation with text, visual style mixing, and intentional and intuitive latent space exploration. This tool was developed to provide a means for designers to explore the "design space" of their domains. Our goal was to create a system to support novices in gaining a more complete, expert understanding of their domain{’}s design space by lowering the barrier of entry to using deep generative models in creative practice.
+Abstract: 
+_We have developed a new tool that makes it possible for people with zero programming experience to intentionally and meaningfully explore the latent space of a GAN. 
+We combine a number of methods from the literature into a single system that includes multiple functionalities: 
+uploading and locating images in the latent space, image generation with text, visual style mixing, 
+and intentional and intuitive latent space exploration. 
+This tool was developed to provide a means for designers to explore the "design space" of their domains. 
+Our goal was to create a system to support novices in gaining a more complete, expert understanding of their domain's 
+design space by lowering the barrier of entry to using deep generative models in creative practice._
 
 ## Dataset
 We use [Zalando dataset](https://github.com/zalandoresearch/feidegger)
@@ -44,14 +51,17 @@ By exploring the first 10 principle components, we found sleeve, pattern, etc.
 To project the image into latent space, we employ SGD with perceptual loss + pixel-by-pixel MSE loss between two images. 
 This loss noticeably improved our tool’s ability to embed out-of-sample examples in the latent space of the GAN.
 
-$$ w^{*} = \min_{w}$$ L(w) =  \min_{w} \lVert f(G(w)) - f(I) \rVert_2^2 + \lambda_{pix} \lVert G(w) - I \rVert_2^2 $$
+$$ w^{*} = \min_{w} L(w) =  \min_{w} \lVert f(G(w)) - f(I) \rVert_2^2 + \lambda_{pix} \lVert G(w) - I \rVert_2^2 $$
 
-Examples of interpolating images simultaneously along two meaningful directions
-in the latent space (sleeve and pattern) found using PCA. The image in the green
-box shows the original image with 0 magnitude.
-<img src="images/pca.png" alt="pca"/>
+[//]: # (Examples of interpolating images simultaneously along two meaningful directions)
 
-## Text-to-image generation
+[//]: # (in the latent space &#40;sleeve and pattern&#41; found using PCA. The image in the green)
+
+[//]: # (box shows the original image with 0 magnitude.)
+
+[//]: # (<img src="images/pca.png" alt="pca"/>)
+
+## Text-to-image Generation
 We implemented two
 methods to locate the design. The first method was to randomly sample images from the
 latent space, then to pass these along with the text description through a CLIP. model to find a small number of images which most closely matched the
@@ -82,5 +92,12 @@ right. The 2D-dimensional canvas represents the design space for two attributes
 in the horizontal and vertical axes, and these attributes can be changed by using
 a drop-down menu for each axis. Dragging the image within the canvas is equivalent to moving through the latent space of the GAN in semantically meaningful
 directions.
-<img src="images/interface_part2.png" alt="interface_part2"/><img src="images/interface_part1.png" alt="interface_part1"/>
+<table><tr>
+<td> <img src="images/interface_part1.png" alt="interface_part1" /> </td>
+<td> <img src="images/interface_part2.png" alt="interface_part2" /> </td>
+</tr></table>
+
+## Acknowledgements
+This project and application is a semester project at [EPFL CHILI Lab](https://www.epfl.ch/labs/chili/)
+
 
