@@ -100,11 +100,11 @@ directions.
 ## Citation
 ```
 @InProceedings{pmlr-v176-jiang22a,
-  title = 	  {GANs for All: Supporting Fun and Intuitive Exploration of GAN Latent Spaces},
+  title =     {GANs for All: Supporting Fun and Intuitive Exploration of GAN Latent Spaces},
   author =    {Jiang, Wei and Davis, Richard Lee and Kim, Kevin Gonyop and Dillenbourg, Pierre},
   booktitle = {Proceedings of the NeurIPS 2021 Competitions and Demonstrations Track},
-  pages = 	  {292--296},
-  year = 	  {2022}
+  pages =     {292--296},
+  year =      {2022}
 }
 ```
 
