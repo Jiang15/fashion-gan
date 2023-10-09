@@ -97,6 +97,17 @@ directions.
 <td> <img src="images/interface_part2.png" alt="interface_part2" /> </td>
 </tr></table>
 
+## Citation
+```
+@InProceedings{pmlr-v176-jiang22a,
+  title = 	  {GANs for All: Supporting Fun and Intuitive Exploration of GAN Latent Spaces},
+  author =    {Jiang, Wei and Davis, Richard Lee and Kim, Kevin Gonyop and Dillenbourg, Pierre},
+  booktitle = {Proceedings of the NeurIPS 2021 Competitions and Demonstrations Track},
+  pages = 	  {292--296},
+  year = 	  {2022}
+}
+```
+
 ## Acknowledgements
 This project and application is a semester project at [EPFL CHILI Lab](https://www.epfl.ch/labs/chili/)
 
